@@ -1,0 +1,99 @@
+﻿@using ShopManagementSystem.Models.ViewModels
+
+@{
+    ViewBag.Title = "BelowReorderLevel";
+}
+<link href="~/Content/form-style.css" rel="stylesheet" />
+<link href="~/Content/Datatables/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/Content/Datatables/dataTables.bootstrap.min.css" rel="stylesheet" />
+<style>
+    #reorderTable {
+        margin: auto;
+        border-collapse: collapse;
+        width: 80%;
+        font-family: sans-serif;
+        font-size: 12px;
+    }
+
+    #reorderTable td, #reorderTable th {
+        text-align: center;
+        border: 1px solid #ddd;
+        padding: 12px;
+    }
+
+    #reorderTable tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    #reorderTable thead {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #0288D1;
+        color: white;
+    }
+</style>
+
+
+<div id="all-head">
+    <span>
+        <h3>Below Reorder Items</h3>
+        <p>Items on below reorder level</p>
+    </span>
+</div>
+
+@* navigation bar *@
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            @Html.ActionLink("Below Reorder level items", "BelowReorderLevel", "Home", null, new { @class = "navbar-brand" })
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active">@Html.ActionLink("Home", "Index", "Home")</li>
+        </ul>
+    </div>
+</nav>
+
+<table id="reorderTable" style="width: 100%">
+    <thead>
+        <tr>
+            <td>Company Name</td>
+            <td>Category</td>
+            <td>Item Name</td>
+            <td>Reorder Level</td>
+            <td>Price</td>
+            <td>Available Quantity</td>
+        </tr>
+    </thead>
+
+    <tbody>
+        @{
+            if (ViewBag.BelowReorderItems != null)
+            {
+                foreach (ItemViewModel items in ViewBag.BelowReorderItems)
+                {
+                    <tr>
+                        <td>@items.CompanyName</td>
+                        <td>@items.CategoryName</td>
+                        <td>@items.ItemName</td>
+                        <td>@items.ReorderLevel</td>
+                        <td>@items.BasePrice</td>
+                        <td>@items.Quantity</td>
+                    </tr>
+                }
+            }
+        }
+    </tbody>
+</table>
+
+<script src="~/Scripts/jquery-1.12.4.min.js"></script>
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#reorderTable').DataTable();
+    });
+</Script>
+
+
+

@@ -1,0 +1,61 @@
+﻿@using ShopManagementSystem.Models
+
+@{
+    ViewBag.Title = "ViewAllCompanies";
+}
+
+<link href="~/Content/form-style.css" rel="stylesheet" />
+
+<!-- Top container -->
+<div id="all-head">
+    <span>
+        <h3>View All Companies</h3>
+        <p>Show all company with phone no from database</p>
+    </span>
+</div>
+
+@* navigation bar *@
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            @Html.ActionLink("View All Companies", "ViewAllCompanies", "Company", null, new { @class = "navbar-brand" })
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active">@Html.ActionLink("Home", "Index", "Home")</li>
+            <li>@Html.ActionLink("Save Company", "SaveCompany", "Company")</li>
+        </ul>
+    </div>
+</nav>
+
+
+<table id="table">
+    <thead>
+        <tr>
+            <td>
+                Company Name
+            </td>
+            <td>
+                Company Phone
+            </td>
+            <td>
+                Added Date
+            </td>
+            <td>
+                Action
+            </td>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (Company company in ViewBag.Companies)
+        {
+            <tr>
+                <td>@company.Name</td>
+                <td>@company.Phone</td>
+                <td>@company.ActionDate</td>
+                <td>@Html.ActionLink("Edit", "Edit", new { id = company.Id })</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

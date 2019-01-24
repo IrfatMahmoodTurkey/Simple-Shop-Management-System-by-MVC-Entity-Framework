@@ -1,0 +1,99 @@
+﻿@model ShopManagementSystem.Models.Company
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<style>
+    .error-message {
+        color: red;
+    }
+</style>
+
+<link href="~/Content/form-style.css" rel="stylesheet" />
+
+<!-- Top container -->
+<div id="all-head">
+    <span>
+        <h3>Edit Company</h3>
+        <p>Edit existing company with phone no in database</p>
+    </span>
+</div>
+
+@* navigation bar *@
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            @Html.ActionLink("Edit Company", "Edit", "Company", null, new { @class = "navbar-brand" })
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active">@Html.ActionLink("Home", "Index", "Home")</li>
+            <li>@Html.ActionLink("View All Companies", "ViewAllCompanies", "Company")</li>
+        </ul>
+    </div>
+</nav>
+
+
+<div class="form-body">
+
+    @{
+        if (ViewBag.Response == 2)
+        {
+            <div class="alert alert-danger alert-dismissible fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Can not Saved!</strong> Company Name already exists.
+            </div>
+        }
+        else if (ViewBag.Response == 1)
+        {
+            <div class="alert alert-success alert-dismissible fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Updated!</strong> Company updated successfully.
+            </div>
+        }
+        else if (ViewBag.Response == 0)
+        {
+            <div class="alert alert-danger alert-dismissible fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Can not Saved!</strong> Failed while updating company.
+            </div>
+        }
+        else if (ViewBag.Response == 3)
+        {
+            <div class="alert alert-danger alert-dismissible fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Can not Saved!</strong> Please fill up all fields correctly.
+            </div>
+        }
+    }
+
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.LabelFor(x => x.Name, "Company Name")
+        <br />
+        @Html.TextBoxFor(x => x.Name, null, new { placeholder = "Enter Company Name" })
+        <br />
+        @Html.ValidationMessageFor(x => x.Name, null, new { @class = "error-message" })
+        <br />
+
+        @Html.LabelFor(x => x.Phone, "Company Phone")
+        <br />
+        @Html.TextBoxFor(x => x.Phone, null, new { placeholder = "Enter Company Phone" })
+        <br />
+        @Html.ValidationMessageFor(x => x.Phone, null, new { @class = "error-message" })
+        <br/>
+        
+        @Html.LabelFor(x => x.ActionDate, "Entry Time")
+        <br />
+        @Html.TextBoxFor(x => x.ActionDate, null, new {disabled="disabled" })
+
+        <input type="submit" value="Update" />
+    }
+</div>
+
+<script src="~/Scripts/jquery-1.12.4.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+

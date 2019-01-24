@@ -1,0 +1,121 @@
+﻿@model ShopManagementSystem.Models.Item
+
+@{
+    ViewBag.Title = "SaveItem";
+}
+
+<style>
+    .error-message {
+        color: red;
+    }
+</style>
+
+<link href="~/Content/form-style.css" rel="stylesheet" />
+
+<!-- Top container -->
+<div id="all-head">
+    <span>
+        <h3>Item Setup</h3>
+        <p>Entry new item in database</p>
+    </span>
+</div>
+
+@* navigation bar *@
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            @Html.ActionLink("Item Setup", "SaveItem", "Item", null, new { @class = "navbar-brand" })
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active">@Html.ActionLink("Home", "Index", "Home")</li>
+            <li>@Html.ActionLink("Show All Items","ViewAllItems","Item")</li>
+        </ul>
+    </div>
+</nav>
+
+
+<div class="form-body">
+
+    @{
+        if (ViewBag.Response == 2)
+        {
+            <div class="alert alert-danger alert-dismissible fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Can not Saved!</strong> Item already exists.
+            </div>
+        }
+        else if (ViewBag.Response == 1)
+        {
+            <div class="alert alert-success alert-dismissible fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Successful!</strong> Item setup successfully.
+            </div>
+        }
+        else if (ViewBag.Response == 0)
+        {
+            <div class="alert alert-danger alert-dismissible fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Can not Saved!</strong> Failed while item setup.
+            </div>
+        }
+        else if (ViewBag.Response == 3)
+        {
+            <div class="alert alert-danger alert-dismissible fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Can not Saved!</strong> Please fill up and select all fields correctly.
+            </div>
+        }
+    }
+
+    @using (Html.BeginForm())
+    {
+        @Html.LabelFor(x => x.CompanyId, "Company")
+        <br/>
+        @Html.DropDownListFor(x => x.CompanyId, new SelectList(ViewBag.Companies, "Value", "Text"))
+        <br/>
+        @Html.ValidationMessageFor(x => x.CompanyId, null, new {@class = "error-message"})
+        <br/>
+
+        @Html.LabelFor(x => x.CategoryId, "Category")
+        <br/>
+        @Html.DropDownListFor(x => x.CategoryId, new SelectList(ViewBag.Categories, "Value", "Text"))
+        <br/>
+        @Html.ValidationMessageFor(x => x.CategoryId, null, new {@class = "error-message"})
+        <br/>
+
+        @Html.LabelFor(x => x.ItemName, "Item Name")
+        <br/>
+        @Html.TextBoxFor(x => x.ItemName, null, new {placeholder = "Enter Item Name"})
+        <br/>
+        @Html.ValidationMessageFor(x => x.ItemName, null, new {@class = "error-message"})
+        <br/>
+
+        @Html.LabelFor(x => x.ReorderLevel, "Reorder Level")
+        <br/>
+        @Html.TextBoxFor(x => x.ReorderLevel, new {@Value="0",placeholder = "Enter Reorder Level"})
+        <br/>
+        @Html.ValidationMessageFor(x => x.ReorderLevel, null, new {@class = "error-message"})
+        <br/>
+
+        @Html.LabelFor(x => x.Price, "Base Price")
+        <br/>
+        @Html.TextBoxFor(x => x.Price, null, new {placeholder = "Enter Item Price"})
+        <br/>
+        @Html.ValidationMessageFor(x => x.Price, null, new {@class = "error-message"})
+        <br/>
+        
+        @Html.LabelFor(x => x.SellPrice, "Sell Price")
+        <br/>
+        @Html.TextBoxFor(x => x.SellPrice, null, new { placeholder = "Enter Item Sell Price" })
+        <br/>
+        @Html.ValidationMessageFor(x => x.SellPrice, null, new { @class = "error-message" })
+        <br/>
+
+        <input type="submit" value="Setup"/>
+    }
+
+</div>
+
+<script src="~/Scripts/jquery-1.12.4.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

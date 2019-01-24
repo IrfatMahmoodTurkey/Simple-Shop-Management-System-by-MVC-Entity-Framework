@@ -1,0 +1,198 @@
+﻿@model ShopManagementSystem.Models.StockIn
+
+@{
+    ViewBag.Title = "StockInItem";
+}
+
+<style>
+    .error-message {
+        color: red;
+    }
+</style>
+
+<link href="~/Content/form-style.css" rel="stylesheet" />
+<link href="~/Contents/bootstrap-datepicker3.min.css" rel="stylesheet"/>
+
+
+<!-- Top container -->
+<div id="all-head">
+    <span>
+        <h3>Stock In Item</h3>
+        <p>Stock In existing Items</p>
+    </span>
+</div>
+
+@* navigation bar *@
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            @Html.ActionLink("Stock In", "StockInItem", "Item", null, new { @class = "navbar-brand" })
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active">@Html.ActionLink("Home", "Index", "Home")</li>
+            <li>@Html.ActionLink("Show All Items", "ViewAllItems", "Item")</li>
+        </ul>
+    </div>
+</nav>
+
+
+<div class="form-body">
+
+    @{
+        if (ViewBag.Response == 2)
+        {
+            <div class="alert alert-danger alert-dismissible fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Can not Saved!</strong> Item already exists.
+            </div>
+        }
+        else if (ViewBag.Response == 1)
+        {
+            <div class="alert alert-success alert-dismissible fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Successful!</strong> Item setup successfully.
+            </div>
+        }
+        else if (ViewBag.Response == 0)
+        {
+            <div class="alert alert-danger alert-dismissible fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Can not Saved!</strong> Failed while item setup.
+            </div>
+        }
+        else if (ViewBag.Response == 3)
+        {
+            <div class="alert alert-danger alert-dismissible fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Can not Saved!</strong> Please fill up and select all fields correctly.
+            </div>
+        }
+    }
+
+    @using (Html.BeginForm())
+    {
+        @Html.LabelFor(x => x.CompanyId, "Company")
+        <br />
+        @Html.DropDownListFor(x => x.CompanyId, new SelectList(ViewBag.Companies, "Value", "Text"))
+        <br />
+        @Html.ValidationMessageFor(x => x.CompanyId, null, new { @class = "error-message" })
+        <br />
+
+        @Html.LabelFor(x => x.ItemId, "Item")
+        <br />
+        @Html.DropDownListFor(x => x.ItemId, new SelectList(""), "--Select Item--")
+        <br />
+        @Html.ValidationMessageFor(x => x.ItemId, null, new { @class = "error-message" })
+        <br />
+
+        @Html.Label("Serial No")
+        <br />
+        @Html.TextBox("SerialNo", null, new { disabled = "disabled" })
+        <br />
+
+        @Html.Label("Reorder Level")
+        <br />
+        @Html.TextBox("ReorderLevel", null, new { disabled = "disabled" })
+        <br />
+
+        @Html.Label("Available Quantity")
+        <br />
+        @Html.TextBox("Quantity", null, new { disabled = "disabled" })
+        <br />
+
+        @Html.Label("Price")
+        <br />
+        @Html.TextBox("Price", null, new { disabled = "disabled" })
+        <br />
+
+        @Html.LabelFor(x => x.Date, "Date")
+        <br />
+        @Html.TextBoxFor(x => x.Date, null, new { placeholder = "Enter Date" })
+        <br />
+        @Html.ValidationMessageFor(x => x.Date, null, new { @class = "error-message" })
+        <br />
+
+        @Html.LabelFor(x => x.StockInQuantity, "Stock In Quantity")
+        <br />
+        @Html.TextBoxFor(x => x.StockInQuantity, null, new { placeholder = "Enter Stock In Quantity" })
+        <br />
+        @Html.ValidationMessageFor(x => x.StockInQuantity, null, new { @class = "error-message" })
+        <br />
+
+        <input type="submit" value="Stock In"/>
+    }
+
+</div>
+
+<script src="~/Scripts/jquery-1.12.4.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/bootstrap-datepicker.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+
+
+
+<script>
+    $("#Date").datepicker('setDate', new Date());
+
+    $(document).ready(function () {
+        $("#CompanyId").change(function () {
+            var CompanyId = $("#CompanyId").val();
+            var json = { id: CompanyId };
+
+            $("#ItemId").empty();
+            $("#ItemId").append('<option value="">--Select Item--</option>');
+            $("#SerialNo").val("");
+            $("#ReorderLevel").val("");
+            $("#Quantity").val("");
+            $("#Price").val("");
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetItemByCompany", "Item")',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(json),
+                success: function (data) {
+                    $.each(data, function (key, value) {
+                        $("#ItemId").append('<option value=' + value.Id + '>' + value.ItemName + '</option>');
+                    });
+
+                }
+            });
+        });
+    });
+
+
+    $(document).ready(function () {
+
+        $("#ItemId").change(function () {
+            var ItemId = $("#ItemId").val();
+            var json = { itemId: ItemId };
+
+            $("#SerialNo").val("");
+            $("#ReorderLevel").val("");
+            $("#Quantity").val("");
+            $("#Price").val("");
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetItemInfoByItemId", "Item")',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(json),
+                success: function (data) {
+
+                    $("#SerialNo").val(data.SerialNo);
+                    $("#ReorderLevel").val(data.ReorderLevel);
+                    $("#Quantity").val(data.Quantity);
+                    $("#Price").val(data.Price);
+                }
+            });
+        });
+    });
+
+    $('#Date').datepicker({
+        format: "dd/mm/yyyy",
+        todayHighlight: true
+    });
+
+
+</script>

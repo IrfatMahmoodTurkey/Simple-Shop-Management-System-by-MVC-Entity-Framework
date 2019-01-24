@@ -1,0 +1,53 @@
+﻿@using ShopManagementSystem.Models;
+@using Microsoft.AspNet.Identity;
+@{
+    ViewBag.Title = "Manage Account";
+}
+
+<style>
+    #changePassword {
+        background-color: #03A9F4;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+    }
+
+        #changePassword:hover {
+            opacity: 0.8;
+        }
+
+     h2 {
+         background-color: #0288D1;
+         margin: 0;
+         padding-top: 18px;
+         padding-bottom: 18px;
+         padding-left: 5px;
+         color: white;
+     }
+</style>
+
+<h2>Shop Management System - @ViewBag.Title.</h2>
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div class="row">
+    <div class="col-md-12">
+        @if (ViewBag.HasLocalPassword)
+        {
+            @Html.Partial("_ChangePasswordPartial")
+        }
+        else
+        {
+            @Html.Partial("_SetPasswordPartial")
+        }
+
+        <h4>How to change password?</h4>
+        <hr/>
+        <p>Enter current password then enter and re enter new password and click change password button to change password</p>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

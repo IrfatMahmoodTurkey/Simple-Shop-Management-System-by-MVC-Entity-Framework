@@ -1,0 +1,158 @@
+﻿@using ShopManagementSystem.Models.ViewModels
+@model ShopManagementSystem.Models.ViewModels.ViewSellsDateViewModel
+
+@{
+    ViewBag.Title = "ViewSellsBetweenDates";
+}
+
+<style>
+    .error-message {
+        color: red;
+    }
+
+    #table tfoot {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #0288D1;
+        color: white;
+    }
+</style>
+
+<link href="~/Content/form-style.css" rel="stylesheet" />
+<link href="~/Contents/bootstrap-datepicker3.min.css" rel="stylesheet" />
+
+<!-- Top container -->
+<div id="all-head">
+    <span>
+        <h3>View Sell Items</h3>
+        <p>Show Sold items between two dates</p>
+    </span>
+</div>
+
+@* navigation bar *@
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            @Html.ActionLink("View Sells", "ViewSellsBetweenDates", "ViewSellsBetweenDates", null, new { @class= "navbar-brand" })
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active">@Html.ActionLink("Home", "Index", "Home")</li>
+            <li>@Html.ActionLink("View All Stock out Items", "ViewAllStockOutItems", "Item")</li>
+        </ul>
+    </div>
+</nav>
+
+
+<div class="form-body">
+
+    @{
+        if (ViewBag.Message == 404)
+        {
+            <div class="alert alert-danger alert-dismissible fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Can not View!</strong> From Date can not be greater then To Date.
+            </div>
+        }
+        else if (ViewBag.Message == 0)
+        {
+            <div class="alert alert-danger alert-dismissible fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Can not View!</strong> Enter from and to date both.
+            </div>
+        }
+    }
+
+    @using (Html.BeginForm())
+    {
+        @Html.LabelFor(x => x.FromDate, "From Date")
+        <br />
+        @Html.TextBoxFor(x => x.FromDate, null, new {placeholder="Select From Date dd/MM/yyyy"})
+        <br />
+        @Html.ValidationMessageFor(x => x.FromDate, null, new { @class = "error-message" })
+        <br />
+
+        @Html.LabelFor(x => x.ToDate, "To Date")
+        <br />
+        @Html.TextBoxFor(x => x.ToDate, null, new { placeholder = "Select To Date dd/MM/yyyy" })
+        <br />
+        @Html.ValidationMessageFor(x => x.ToDate, null, new { @class = "error-message" })
+        <br />
+
+        <input type="submit" value="Search" />
+    }
+</div>
+
+<table id="table">
+    <thead>
+        <tr>
+            <td>
+                Item
+            </td>
+            <td>
+                Company
+            </td>
+            <td>
+                Quantity
+            </td>
+            <td>
+                Price
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            if (ViewBag.Response != null)
+            {
+                foreach (SellsViewModels models in ViewBag.Response)
+                {
+                    <tr>
+                        <td>@models.ItemName</td>
+                        <td>@models.CompanyName</td>
+                        <td>@models.Quantity</td>
+                        <td>@models.Price</td>
+                    </tr>
+                }
+            }
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            @{
+                if (ViewBag.MainPrice == null && ViewBag.SellPrice == null)
+                {
+                    <td></td>
+                    <td>Profit = 0.00</td>
+                    <td>Base Price = 0.00</td>
+                    <td>Sell Price = 0.00</td>
+                }
+                else
+                {
+                    <td></td>
+                    <td>Profit = @ViewBag.Profit</td>
+                    <td>Base Price = @ViewBag.MainPrice</td>
+                    <td>Sell Price = @ViewBag.SellPrice</td>
+                }
+            }
+        </tr>
+    </tfoot>
+</table>
+
+<script src="~/Scripts/jquery-1.12.4.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/bootstrap-datepicker.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+
+<script>
+
+    $('#FromDate').datepicker({
+        format: "dd/mm/yyyy",
+        todayHighlight: true
+    });
+
+    $('#ToDate').datepicker({
+        format: "dd/mm/yyyy",
+        todayHighlight: true
+    });
+</script>

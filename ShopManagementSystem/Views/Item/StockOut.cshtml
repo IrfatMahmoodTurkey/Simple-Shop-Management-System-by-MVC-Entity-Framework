@@ -1,0 +1,301 @@
+﻿@using ShopManagementSystem.Models.ViewModels
+@model ShopManagementSystem.Models.Cart
+
+@{
+    ViewBag.Title = "StockOut";
+}
+
+<style>
+    .error-message {
+        color: red;
+    }
+
+    #table-full {
+        margin: auto;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        #table-full td, #table-full th {
+            text-align: center;
+            border: 1px solid #ddd;
+            padding: 12px;
+        }
+
+        #table-full tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #table-full thead {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #0288D1;
+            color: white;
+        }
+</style>
+
+<link href="~/Content/form-style.css" rel="stylesheet" />
+
+
+<!-- Top container -->
+<div id="all-head">
+    <span>
+        <h3>Stock Out Item</h3>
+        <p>Sell, Damage, or Lost entry of item in database</p>
+    </span>
+</div>
+
+@* navigation bar *@
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            @Html.ActionLink("Stock Out", "StockOut", "Item", null, new { @class = "navbar-brand" })
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active">@Html.ActionLink("Home", "Index", "Home")</li>
+            <li>@Html.ActionLink("Show All Stock out Items", "ViewAllStockOutItems", "Item")</li>
+        </ul>
+    </div>
+</nav>
+
+
+<div class="form-body">
+
+    @{
+        if (ViewBag.Response == 4)
+        {
+            <div class="alert alert-danger alert-dismissible fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Can not Updated!</strong> Error occured during update quantity.
+            </div>
+        }
+        else if (ViewBag.Response == 1)
+        {
+            <div class="alert alert-success alert-dismissible fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Successful!</strong> Added cart successfully.
+            </div>
+        }
+        else if (ViewBag.Response == 0)
+        {
+            <div class="alert alert-danger alert-dismissible fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Can not Added!</strong> Failed while adding cart.
+            </div>
+        }
+        else if (ViewBag.Response == 3)
+        {
+            <div class="alert alert-success alert-dismissible fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Update Succcessful!</strong> Update quantity successfully.
+            </div>
+        }
+        else if (ViewBag.Response == 5)
+        {
+            <div class="alert alert-danger alert-dismissible fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Can not Added!</strong> Please fill up and select all fields correctly.
+            </div>
+        }
+        else if (ViewBag.Response == 100)
+        {
+            <div class="alert alert-success alert-dismissible fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Successfull!</strong> Stock out products successfully.
+            </div>
+        }
+        else if (ViewBag.Response == 101)
+        {
+            <div class="alert alert-danger alert-dismissible fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Can not stock out!</strong> An error occured during stock out product.
+            </div>
+        }
+        else if (ViewBag.Response == 404)
+        {
+            <div class="alert alert-danger alert-dismissible fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Add some product!</strong> Add some product to stock out.
+            </div>
+        }
+        else if (ViewBag.Response == 66)
+        {
+            <div class="alert alert-danger alert-dismissible fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Can not add!</strong> Quatity is not available.
+            </div>
+        }
+    }
+
+    @using (Html.BeginForm())
+    {
+        @Html.LabelFor(x => x.CompanyId)
+        <br />
+        @Html.DropDownListFor(x => x.CompanyId, new SelectList(ViewBag.Companies, "Value", "Text"))
+        <br />
+        @Html.ValidationMessageFor(x => x.CompanyId, null, new { @class = "error-message" })
+        <br />
+
+        @Html.LabelFor(x => x.ItemId, "Item")
+        <br />
+        @Html.DropDownListFor(x => x.ItemId, new SelectList(""), "--Select Item--")
+        <br />
+        @Html.ValidationMessageFor(x => x.ItemId, null, new { @class = "error-message" })
+        <br />
+
+        @Html.Label("Serial No")
+        <br />
+        @Html.TextBox("SerialNo", null, new { disabled = "disabled" })
+        <br />
+
+        @Html.Label("Reorder Level")
+        <br />
+        @Html.TextBox("ReorderLevel", null, new { disabled = "disabled" })
+        <br />
+
+        @Html.Label("Available Quantity")
+        <br />
+        @Html.TextBoxFor(x=>x.AvailableQuantity, null, new { disabled = "disabled" })
+        <br />
+
+        @Html.Label("Price")
+        <br />
+        @Html.TextBox("Price", null, new { disabled = "disabled" })
+        <br />
+
+        @Html.LabelFor(x => x.Quantity, "Quantity")
+        <br />
+        @Html.TextBoxFor(x => x.Quantity, null, new { placeholder = "Enter Quantity" })
+        <br />
+        @Html.ValidationMessageFor(x => x.Quantity, null, new { @class = "error-message" })
+        <br/>
+        
+        @Html.LabelFor(x=>x.Discount, "Discount")
+        <br />
+        @Html.TextBoxFor(x => x.Discount,  new { @Value = "0", placeholder = "Enter Discount"})
+        <br />
+        @Html.ValidationMessageFor(x => x.Discount, null, new { @class = "error-message" })
+        <br />
+
+
+        <input type="submit" name="addButton" value="Add"/>
+
+        <br/>
+        <hr/>
+
+
+        <table id="table-full">
+            <thead>
+            <tr>
+                <td>
+                    Item Name
+                </td>
+                <td>
+                    Company Name
+                </td>
+                <td>
+                    Quantity
+                </td>
+                <td>
+                    Price With Discount
+                </td>
+            </tr>
+            </thead>
+            <tbody>
+            @if (ViewBag.Carts != null)
+            {
+                foreach (CartViewModel items in ViewBag.Carts)
+                {
+                    <tr>
+                        <td>
+                            @items.ItemName
+                            @Html.HiddenFor(modelItem => items.ItemId)
+                        </td>
+
+                        <td>
+                            @items.CompanyName
+                            @Html.HiddenFor(modelItem => items.CompanyId)
+                        </td>
+                        <td>
+                            @items.Quantity
+                            @Html.HiddenFor(modelItem => items.Quantity)
+                        </td>
+                        <td>
+                            @items.Price
+                            @Html.HiddenFor(modelItem => items.Price)
+                            @Html.HiddenFor(modelItem => items.Discount)
+                        </td>
+                    </tr>
+                }
+
+            }
+            </tbody>
+        </table>
+        <br/>
+        <input type="submit" formnovalidate="formnovalidate" name="sellButton" value="Sell"/>
+        <input type="submit" formnovalidate="formnovalidate" name="damageButton" value="Damage"/>
+        <input type="submit" formnovalidate="formnovalidate" name="lostButton" value="Loss" />
+
+    }
+</div>
+
+<script src="~/Scripts/jquery-1.12.4.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#CompanyId").change(function () {
+            var CompanyId = $("#CompanyId").val();
+            var json = { id: CompanyId };
+
+            $("#ItemId").empty();
+            $("#ItemId").append('<option value="">--Select Item--</option>');
+            $("#SerialNo").val("");
+            $("#ReorderLevel").val("");
+            $("#AvailableQuantity").val("");
+            $("#Price").val("");
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetItemByCompany", "Item")',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(json),
+                success: function (data) {
+                    $.each(data, function (key, value) {
+                        $("#ItemId").append('<option value=' + value.Id + '>' + value.ItemName + '</option>');
+                    });
+
+                }
+            });
+        });
+    });
+
+
+    $(document).ready(function () {
+
+        $("#ItemId").change(function () {
+            var ItemId = $("#ItemId").val();
+            var json = { itemId: ItemId };
+
+            $("#SerialNo").val("");
+            $("#ReorderLevel").val("");
+            $("#AvailableQuantity").val("");
+            $("#Price").val("");
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetItemInfoByItemId", "Item")',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(json),
+                success: function (data) {
+
+                    $("#SerialNo").val(data.SerialNo);
+                    $("#ReorderLevel").val(data.ReorderLevel);
+                    $("#AvailableQuantity").val(data.Quantity);
+                    $("#Price").val(data.SellPrice);
+                }
+            });
+        });
+    });
+</script>
+

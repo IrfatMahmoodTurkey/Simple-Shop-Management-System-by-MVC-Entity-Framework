@@ -1,0 +1,57 @@
+﻿@using ShopManagementSystem.Models
+
+
+@{
+    ViewBag.Title = "ViewAllCategories";
+}
+<link href="~/Content/form-style.css" rel="stylesheet" />
+
+<!-- Top container -->
+<div id="all-head">
+    <span>
+        <h3>View All Categories</h3>
+        <p>Show all categories from database</p>
+    </span>
+</div>
+
+@* navigation bar *@
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            @Html.ActionLink("View All Categories", "ViewAllCategories", "Category", null, new { @class = "navbar-brand" })
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active">@Html.ActionLink("Home", "Index", "Home")</li>
+            <li>@Html.ActionLink("Save Category", "SaveCategory", "Category")</li>
+        </ul>
+    </div>
+</nav>
+
+
+<table id="table">
+    <thead>
+        <tr>
+            <td>
+                Category Name
+            </td>
+            <td>
+                Added Date
+            </td>
+            <td>
+                Action
+            </td>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (Category category in ViewBag.Categories)
+        {
+            <tr>
+                <td>@category.Name</td>
+                <td>@category.ActionDate</td>
+                <td>@Html.ActionLink("Edit", "Edit", new { id = category.Id })</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

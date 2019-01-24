@@ -1,0 +1,196 @@
+﻿
+@{
+    ViewBag.Title = "Charts";
+}
+
+<link href="~/Content/form-style.css" rel="stylesheet" />
+
+<!-- Custom fonts for this template-->
+<link href="/Home/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+<!-- Custom styles for this template-->
+<link href="/Home/css/sb-admin.css" rel="stylesheet">
+
+
+<!-- Top container -->
+<div id="all-head">
+    <span>
+        <h3>All Statistical Charts</h3>
+        <p>All Statistical Charts for system</p>
+    </span>
+</div>
+
+@* navigation bar *@
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            @Html.ActionLink("All Charts", "Charts", "Home", null, new {@class = "navbar-brand"})
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active">@Html.ActionLink("Home", "Index", "Home")</li>
+        </ul>
+    </div>
+</nav>
+
+<h4>Yearly Total Sell Chart (For @ViewBag.Year)</h4>
+<hr/>
+<div class="card-body">
+     <canvas id="myAreaChart" width="100%" height="30"></canvas>
+</div>
+
+<h4>Yearly Total Profit Chart (For @ViewBag.Year)</h4>
+<hr />
+<div class="card-body">
+    <canvas id="myBarChart2" width="100%" height="30"></canvas>
+</div>
+
+<!-- Bootstrap core JavaScript-->
+<script src="/Home/vendor/jquery/jquery.min.js"></script>
+<script src="/Home/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="/Home/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Page level plugin JavaScript-->
+<script src="/Home/vendor/chart.js/Chart.min.js"></script>
+<script src="/Home/vendor/datatables/jquery.dataTables.js"></script>
+<script src="/Home/vendor/datatables/dataTables.bootstrap4.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="/Home/js/sb-admin.min.js"></script>
+
+<!-- Demo scripts for this page-->
+<script src="/Home/js/demo/datatables-demo.js"></script>
+
+<script>
+    // Set new default font family and font color to mimic Bootstrap's default styling
+    Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+    Chart.defaults.global.defaultFontColor = '#292b2c';
+
+    var jan = '@ViewBag.Jan';
+    var feb = '@ViewBag.Feb';
+    var mar = '@ViewBag.Mar';
+    var apr = '@ViewBag.Apr';
+    var may = '@ViewBag.May';
+    var jun = '@ViewBag.Jun';
+    var jul = '@ViewBag.Jul';
+    var aug = '@ViewBag.Aug';
+    var sep = '@ViewBag.Sept';
+    var oct = '@ViewBag.Oct';
+    var nov = '@ViewBag.Nov';
+    var dec = '@ViewBag.Dec';
+
+    // Area Chart Example
+    var ctx = document.getElementById("myAreaChart");
+    var myLineChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"],
+            datasets: [{
+                label: "Sessions",
+                lineTension: 0.3,
+                backgroundColor: "rgba(2,117,216,0.2)",
+                borderColor: "rgba(2,117,216,1)",
+                pointRadius: 5,
+                pointBackgroundColor: "rgba(2,117,216,1)",
+                pointBorderColor: "rgba(255,255,255,0.8)",
+                pointHoverRadius: 5,
+                pointHoverBackgroundColor: "rgba(2,117,216,1)",
+                pointHitRadius: 50,
+                pointBorderWidth: 2,
+                data: [jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec],
+            }],
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    time: {
+                        unit: 'date'
+                    },
+                    gridLines: {
+                        display: false
+                    },
+                    ticks: {
+                        maxTicksLimit: 7
+                    }
+                }],
+                yAxes: [{
+                    ticks: {
+                        min: 0,
+                        max: 40000,
+                        maxTicksLimit: 5
+                    },
+                    gridLines: {
+                        color: "rgba(0, 0, 0, .125)",
+                    }
+                }],
+            },
+            legend: {
+                display: false
+            }
+        }
+    });
+
+
+
+    var janPro = '@ViewBag.JanPro';
+    var febPro = '@ViewBag.FebPro';
+    var marPro = '@ViewBag.MarPro';
+    var aprPro = '@ViewBag.AprPro';
+    var mayPro= '@ViewBag.MayPro';
+    var junPro = '@ViewBag.JunPro';
+    var julPro = '@ViewBag.JulPro';
+    var augPro = '@ViewBag.AugPro';
+    var sepPro = '@ViewBag.SeptPro';
+    var octPro = '@ViewBag.OctPro';
+    var novPro = '@ViewBag.NovPro';
+    var decPro = '@ViewBag.DecPro';
+
+
+    // Bar Chart Example
+    var ctx = document.getElementById("myBarChart2");
+    var myLineChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"],
+            datasets: [{
+                label: "Revenue",
+                backgroundColor: "rgba(2,117,216,1)",
+                borderColor: "rgba(2,117,216,1)",
+                data: [janPro, febPro, marPro, aprPro, mayPro, junPro, julPro, augPro, sepPro, octPro, novPro, decPro],
+            }],
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    time: {
+                        unit: 'month'
+                    },
+                    gridLines: {
+                        display: false
+                    },
+                    ticks: {
+                        maxTicksLimit: 6
+                    }
+                }],
+                yAxes: [{
+                    ticks: {
+                        min: 0,
+                        max: 100,
+                        maxTicksLimit: 5
+                    },
+                    gridLines: {
+                        display: true
+                    }
+                }],
+            },
+            legend: {
+                display: false
+            }
+        }
+    });
+
+</script>
+
+
+

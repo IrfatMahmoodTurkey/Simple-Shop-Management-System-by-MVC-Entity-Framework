@@ -1,0 +1,95 @@
+﻿@model ShopManagementSystem.Models.Category
+
+@{
+    ViewBag.Title = "SaveCategory";
+}
+
+
+
+<style>
+    .error-message {
+        color: red;
+    }
+</style>
+
+<link href="~/Content/form-style.css" rel="stylesheet" />
+
+<!-- Top container -->
+<div id="all-head">
+    <span>
+        <h3>Save Category</h3>
+        <p>Entry new category in database</p>
+    </span>
+    
+</div>
+
+@* navigation bar *@
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            @Html.ActionLink("Category Setup", "SaveCategory", "Category", null, new { @class = "navbar-brand" })
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active">@Html.ActionLink("Home", "Index", "Home")</li>
+            <li>@Html.ActionLink("View All Categorires", "ViewAllCategories", "Category")</li>
+        </ul>
+
+          
+        
+    </div>
+</nav>
+
+
+<div class="form-body">
+
+    @{
+        if (ViewBag.Response == 2)
+        {
+            <div class="alert alert-danger alert-dismissible fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Can not Saved!</strong> Category Name already exists.
+            </div>
+        }
+        else if (ViewBag.Response == 1)
+        {
+            <div class="alert alert-success alert-dismissible fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Successful!</strong> Category saved successfully.
+            </div>
+        }
+        else if (ViewBag.Response == 0)
+        {
+            <div class="alert alert-danger alert-dismissible fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Can not Saved!</strong> Failed while saving category.
+            </div>
+        }
+        else if (ViewBag.Response == 3)
+        {
+            <div class="alert alert-danger alert-dismissible fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Can not Saved!</strong> Please fill up all fields correctly.
+            </div>
+        }
+    }
+
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.LabelFor(x => x.Name, "Category Name")
+        <br />
+        @Html.TextBoxFor(x => x.Name, null, new { placeholder = "Enter Category Name" })
+        <br />
+        @Html.ValidationMessageFor(x => x.Name, null, new { @class = "error-message" })
+        <br />
+
+        <input type="submit" value="Save" />
+    }
+</div>
+
+<script src="~/Scripts/jquery-1.12.4.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+

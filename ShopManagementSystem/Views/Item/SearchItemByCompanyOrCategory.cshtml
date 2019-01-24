@@ -1,0 +1,102 @@
+﻿@using ShopManagementSystem.Models.ViewModels
+@model ShopManagementSystem.Models.ViewModels.SearchItemViewModel
+
+@{
+    ViewBag.Title = "SearchItemByCompanyOrCategory";
+}
+
+<style>
+    .error-message {
+        color: red;
+    }
+</style>
+
+<link href="~/Content/form-style.css" rel="stylesheet" />
+<link href="~/Contents/bootstrap-datepicker3.min.css" rel="stylesheet" />
+
+
+<!-- Top container -->
+<div id="all-head">
+    <span>
+        <h3>Search Item</h3>
+        <p>Search Item with category or company or both</p>
+    </span>
+</div>
+
+@* navigation bar *@
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            @Html.ActionLink("Search Item", "SearchItemByCompanyOrCategory", "Item", null, new { @class = "navbar-brand" })
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active">@Html.ActionLink("Home", "Index", "Home")</li>
+            <li>@Html.ActionLink("Show All Items", "ViewAllItems", "Item")</li>
+        </ul>
+    </div>
+</nav>
+
+
+<div class="form-body">
+
+    @{
+        if (ViewBag.Response == 0)
+        {
+            <div class="alert alert-danger alert-dismissible fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Can not Search!</strong> Please select one company or category.
+            </div>
+        }
+    }
+
+    @using (Html.BeginForm())
+    {
+        @Html.LabelFor(x => x.CompanyId, "Company")
+        <br/>
+        @Html.DropDownListFor(x => x.CompanyId, new SelectList(ViewBag.Companies, "Value", "Text"))
+        <br/>
+
+        @Html.LabelFor(x => x.CategoryId, "Category")
+        <br/>
+        @Html.DropDownListFor(x => x.CategoryId, new SelectList(ViewBag.Categories, "Value", "Text"))
+        <br/>
+
+        <input type="submit" value="Search"/>
+    }
+</div>
+
+<table id="table">
+    <thead>
+    <tr>
+        <td>Item</td>
+        <td>Company</td>
+        <td>Category</td>
+        <td>Reorder Level</td>
+        <td>Base Price</td>
+        <td>Serial</td>
+        <td>Quantity</td>
+        <td>Sell Price</td>
+    </tr>
+    </thead>
+
+    <tbody>
+        @{
+            if (ViewBag.Items != null)
+            {
+                foreach (ItemViewModel item in ViewBag.Items)
+                {
+                    <tr>
+                        <td>@item.ItemName</td>
+                        <td>@item.CompanyName</td>
+                        <td>@item.CategoryName</td>
+                        <td>@item.ReorderLevel</td>
+                        <td>@item.BasePrice</td>
+                        <td>@item.SerialNo</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.SellPrice</td>                       
+                    </tr>
+                }
+            }
+        }
+    </tbody>
+</table>

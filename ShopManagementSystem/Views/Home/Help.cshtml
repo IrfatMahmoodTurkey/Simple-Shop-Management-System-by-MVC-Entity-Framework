@@ -1,0 +1,228 @@
+﻿
+@{
+    ViewBag.Title = "Help";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Help | Frequently Questions Answer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+    <link href="../../Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../../Content/font-awesome.min.css" rel="stylesheet" />
+
+
+
+    <script src="../../Scripts/jquery-1.12.4.min.js"></script>
+    <script src="../../Scripts/bootstrap.min.js"></script>
+
+    <!-- CSS Style  -->
+    <style>
+        div {
+            font-size: 17px;
+        }
+
+        a {
+            font-size: 22px;
+            display: block;
+        }
+
+        .page-header {
+            margin: -20px 0 0;
+            border-bottom: 1px solid #eee;
+            background: #023FAF;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+            .page-header a {
+                margin-top: 50px;
+                background: #7CADDE;
+            }
+
+            .page-header small {
+                color: #ccc;
+            }
+
+        .faqHeader {
+            font-size: 32px;
+            margin: 20px;
+        }
+
+        .panel-heading [data-toggle="collapse"]:after {
+            font-family: 'Glyphicons Halflings';
+            content: "\e072"; /* "play" icon */
+            float: right;
+            color: #F58723;
+            font-size: 18px;
+            line-height: 22px;
+            /* rotate "play" icon from > (right arrow) to down arrow */
+            -webkit-transform: rotate(-90deg);
+            -moz-transform: rotate(-90deg);
+            -ms-transform: rotate(-90deg);
+            -o-transform: rotate(-90deg);
+            transform: rotate(-90deg);
+        }
+
+        .panel-heading [data-toggle="collapse"].collapsed:after {
+            /* rotate "play" icon from > (right arrow) to ^ (up arrow) */
+            -webkit-transform: rotate(90deg);
+            -moz-transform: rotate(90deg);
+            -ms-transform: rotate(90deg);
+            -o-transform: rotate(90deg);
+            transform: rotate(90deg);
+            color: #454444;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-header">
+        <h1>Shop Managment System Help <br /> <small> Frequently Asked Questions</small></h1>
+        @Html.ActionLink("Go back to Log in", "Login", "Account", null, new { @class = "pull-center btn btn-success", style = "margin-right: 20px; color: #ffffff" })
+    </div>
+    <!-- Bootstrap FAQ - START -->
+    <div class="container">
+        <br />
+        <div class="panel-group" id="accordion">
+            <div class="faqHeader">General questions</div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Is account registration required?</a>
+                    </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        Account registration at <strong>Shop Managment System Software</strong> is only required  for clients. Currently new registration system is truned off. <br />
+
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Can I use this software without login?</a>
+                    </h4>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        No you cannot login without user id and password.
+                    </div>
+                </div>
+            </div>
+
+            <div class="faqHeader">Dashboard</div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">Overview</a>
+                    </h4>
+                </div>
+                <div id="collapseThree" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        After login into our website you will redirect to our software <strong>Dashboard</strong> . Under overview section you can see basic report of our software activity.
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFour">Category Setup</a>
+                    </h4>
+                </div>
+                <div id="collapseFour" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        Under <strong> Category Setup</strong> , you can set your product category name by using name input box .
+                        And all category name will show serially in same page.
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFive">Company Setup</a>
+                    </h4>
+                </div>
+                <div id="collapseFive" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        Under <strong>Company Setup </strong>, you can set your customer Company Name by  using name input box .
+                        And all company name will show serially in same page.
+                        And more..
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseSix">Item Setup</a>
+                    </h4>
+                </div>
+                <div id="collapseSix" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        Under <strong>Item Setup </strong>, you can set your Items depending on  Company Name & Category .
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven">Stock in</a>
+                    </h4>
+                </div>
+                <div id="collapseSeven" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        Under <strong>Stock In </strong>section you can stock your items and quanity under a company name. Select company and items and quanity how much you want to stock in . Before do that you have to setup at least 1 items in <strong>Item Setup </strong> section .
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseEight">Stock out</a>
+                    </h4>
+                </div>
+                <div id="collapseEight" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        Under <strong>Stock Out </strong>section you can stock out your saved items. Just select Company and Item then quantity how much item you want to stock out. Then you can choose 3 options which is Sell, Damage and Lost. Before do that if you have to stock in your items in <strong>Stock In  </strong> section .
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseNine">Search & View Item Summery</a>
+                    </h4>
+                </div>
+                <div id="collapseNine" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        Under <strong>Search & View Item Summery </strong> section you can view your all items under company and its category. Just select Company and category and click on search button. A complete items list will be show serially with items quanity .
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTen">View Sales between two dates</a>
+                    </h4>
+                </div>
+                <div id="collapseTen" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        On this  <strong>View Sales between two dates </strong> section you can check when   you sold your items , Just simply select your from date and targeted date to view  your sells between two date .
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <!-- Bootstrap FAQ - END -->
+
+</body>
+</html>
+
